@@ -1,0 +1,67 @@
+﻿@using MapitSiteAdmin.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity;
+@model IEnumerable<MapitUser>
+
+<h1>User List</h1>
+<br />
+@if (TempData["success"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["success"]
+    </div>
+}
+<table class="table table-striped" id="userTable">
+    <thead>
+        <tr>
+            <th>
+                User
+            </th>
+            <th>
+                Email
+            </th>
+
+            <th style="width:10%">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    <div class="row">
+                        <div class="col-sm">
+                            <a>
+                                @user.UserName
+                            </a>
+                            <br>
+                            <small>
+                                @user.Email
+                            </small>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                        @foreach (var role in @ViewBag.Roles)
+                        {
+                         <span>@role</span>
+                        }
+                      
+                </td>
+                <td>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                        </button>
+                        <div class="dropdown-menu shadow animated--grow-in">
+                            <a style='margin-right:16px' asp-controller="UserRoles" asp-action="Index" asp-route-userId="@user.Id" class="dropdown-item">
+                                <i class="fas fa-wrench"></i> Manage Roles
+                            </a>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
